@@ -29,7 +29,7 @@ NODEUSER={{user}}:{{group}}             # USER who OWNS the daemon process (no m
 LOCAL_VAR_RUN=/var/run                  # In case the init script is run by non-root user, you need to
                                         # indicate a directory writeable by $NODEUSER to store the PID file
 
-DAEMON={{execpath}}                     # this SHOULD POINT TO where your node executable is
+DAEMON={{execbin}}                     # this SHOULD POINT TO the executable binary
 
 LABEL={{label}}
 LOGFILE={{logroot}}/$LABEL.log # Logfile path
@@ -124,8 +124,7 @@ do_start()
     || { [ "$VERBOSE" != no ] && log_daemon_msg  "  --->  Daemon already running $DESC" "$INIT_SCRIPT_NAME_NOEXT"; return 1; }
 
   # Return 2 if daemon could not be started
-  { start-stop-daemon --start --quiet --chuid $NODEUSER --make-pidfile --pidfile $PIDFILE --background --name $LABEL --exec $DAEMON -- \
-    $DAEMON_ARGS {{{wrappercode}}} & } \
+  { start-stop-daemon --start --quiet --chuid $NODEUSER --make-pidfile --pidfile $PIDFILE --background --name $LABEL --exec $DAEMON & } \
     || { [ "$VERBOSE" != no ] && log_daemon_msg  "  --->  could not be start $DESC" "$INIT_SCRIPT_NAME_NOEXT"; return 2; }
 
   # Add code here, if necessary, that waits for the process to be ready
@@ -161,7 +160,7 @@ do_stop()
   # needed by services started subsequently.  A last resort is to
   # sleep for some time.
   
-  start-stop-daemon --stop --quiet --oknodo --retry=0/3/KILL/5 --pidfile $PIDFILE  --chuid $NODEUSER --exec $DAEMON -- $DAEMON_ARGS {{{wrappercode}}}
+  start-stop-daemon --stop --quiet --oknodo --retry=0/3/KILL/5 --pidfile $PIDFILE  --chuid $NODEUSER --exec $DAEMON
   [ "$?" = 2 ] && return 2
 
   sleep 1

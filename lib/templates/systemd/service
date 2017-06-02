@@ -3,7 +3,7 @@ Description={{description}}
 After=network.target
 
 [Service]
-ExecStart={{execpath}} {{nodescript}}
+ExecStart={{execbin}}
 Restart=always
 SyslogIdentifier={{label}}
 User={{user}}

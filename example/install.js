@@ -4,7 +4,7 @@ var Service = require('../').Service;
 var svc = new Service({
   name:'Hello World',
   description: 'The nodejs.org example web server.',
-  script: require('path').join(__dirname,'helloworld.js'),
+  execbin: 'cat',
   env:{
     name: "NODE_ENV",
     value: "production"

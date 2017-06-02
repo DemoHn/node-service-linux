@@ -12,7 +12,7 @@ PIDFILE="{{pidroot}}/{{label}}.pid"
 #ps -fe | grep "{{label}}" | head -n1 | cut -d" " -f 6 > ${PIDFILE}
 
 USER={{user}}
-DAEMON={{execpath}}
+DAEMON={{execbin}}
 SCRIPT={{script}}
 LABEL={{label}}
 LOG_FILE={{logroot}}/{{label}}.log
@@ -21,7 +21,7 @@ LOCK_FILE=/var/lock/subsys/node-daemon-$LABEL
 do_start()
 {
   if [ ! -f "${LOCK_FILE}" ] ; then
-    su - ${USER} -s /bin/sh -c "$DAEMON $SCRIPT {{{wrappercode}}} >> $LOG_FILE 2>&1 </dev/null & echo \$!"  > ${PIDFILE}
+    su - ${USER} -s $DAEMON >> $LOG_FILE 2>&1 </dev/null & echo \$! > ${PIDFILE}
     RETVAL=$?
     [ $RETVAL -eq 0 ] && touch ${LOCK_FILE}
   else
