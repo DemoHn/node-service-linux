@@ -166,8 +166,8 @@ do_stop()
   sleep 1
   
   # Kill the child process forcibly
-  NODESCRIPT={{{nodescript}}}
-  CPID=`pgrep -f $NODESCRIPT`
+  PROCNAME={{{procname}}}
+  CPID=`pgrep -f $PROCNAME`
   kill -9 $CPID 
   
   # Many daemons don't delete their pidfiles when they exit.
