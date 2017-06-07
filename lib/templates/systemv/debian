@@ -166,7 +166,7 @@ do_stop()
   sleep 1
   
   # Kill the child process forcibly
-  PROCNAME={{{procname}}}
+  PROCNAME="{{procname}}"
   CPID=`pgrep -f $PROCNAME`
   kill -9 $CPID 
   
